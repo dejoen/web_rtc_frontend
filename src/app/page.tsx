@@ -1,8 +1,8 @@
 'use client'
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import JsSIP, { UA } from 'jssip'
-import { useCallback, useEffect, useRef, useState } from "react";
+
+import JsSIP from 'jssip'
+import { useCallback, useRef, useState } from "react";
 import SipConfig from "@/helper/SIpConfig";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 
@@ -12,7 +12,7 @@ export default function Home() {
 
   const [userToCallSipDetails, setUserUserToCallSipDetails] = useState('')
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [incomingCallDetails, setIncomingCallDetails] = useState()
+  const [incomingCallDetails, setIncomingCallDetails] = useState<any>()
 
   const dialogBtnRef = useRef<HTMLButtonElement>(null)
 
@@ -66,25 +66,8 @@ export default function Home() {
 
 
   // Register callbacks to desired call events
-  var eventHandlers = {
-    'progress': function (e: any) {
-      console.log('call is in progress');
-    },
-    'failed': function (e: any) {
-      console.log('call failed with cause: ' + e.data.cause);
-    },
-    'ended': function (e: any) {
-      console.log('call ended with cause: ' + e.data.cause);
-    },
-    'confirmed': function (e: any) {
-      console.log('call confirmed');
-    }
-  };
 
-  var options = {
-    'eventHandlers': eventHandlers,
-    'mediaConstraints': { 'audio': true, 'video': true }
-  };
+
 
 
   //let sipInstance: SipConfig
@@ -155,7 +138,7 @@ export default function Home() {
           audio: true // Set to true to capture microphone alongside video
         };
 
-        const localStream = await navigator.mediaDevices.getUserMedia(constraints);
+        await navigator.mediaDevices.getUserMedia(constraints);
 
       }}>
         now
@@ -196,7 +179,7 @@ export default function Home() {
 
             {/* Answer Button (The direct user gesture target) */}
             <AlertDialogAction
-              onClick={async (e) => {
+              onClick={async (e: any) => {
                 e.preventDefault();
 
                 try {

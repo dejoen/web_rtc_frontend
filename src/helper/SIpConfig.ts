@@ -1,7 +1,6 @@
-import useMediaHook from '@/hook/MediaHook';
-import JsSIP, { C } from 'jssip'
-import { PeerConnectionEvent } from 'jssip/lib/RTCSession';
-import { RegisteredEvent } from 'jssip/lib/UA';
+
+import JsSIP from 'jssip'
+
 
 export default class SipConfig  {
     static userName: string;
@@ -27,7 +26,7 @@ export default class SipConfig  {
      
 
 
-     let  configuration = {
+     const configuration = {
     sockets: [this.socket],
       transportOptions: {
     wsServers: ['wss://express-app-tjes.onrender.com'], // Crucial: NO PORT 80 HERE
@@ -51,7 +50,7 @@ export default class SipConfig  {
 
   };
 
-    let ua = new JsSIP.UA(configuration)
+    const ua = new JsSIP.UA(configuration)
     ua.start()
     
     SipConfig.sipInstance = ua
